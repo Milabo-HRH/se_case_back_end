@@ -1,0 +1,8 @@
+dataSource:
+  driverName: mysql
+  port: 3306
+  host: localhost
+  database: CaseRecord
+  username: root
+  password: 110611
+  charset: utf8
