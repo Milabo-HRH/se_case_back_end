@@ -1,6 +1,9 @@
 package routers
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"se_case_back_end/controller"
+)
 
 func CollectRoute(r *gin.Engine) *gin.Engine {
 
@@ -24,6 +27,7 @@ func CollectRoute(r *gin.Engine) *gin.Engine {
 	////r.POST("/annotations/pass", middleware.AuthMiddleware, controller.PassAnnotation)
 	//r.POST("/annotations/reject", middleware.AuthMiddleware, middleware.AuthPrivilege("important"), controller.DeleteAnnotation)
 	////r.POST("/annotations/reject", middleware.AuthMiddleware, controller.DeleteAnnotation)
-	r.GET("/api/record/:patient_id")
+	r.GET("/api/record/:patient_id", controller.GetRecordByPID)
+	r.GET("/api/view/:id", controller.GetRecord)
 	return r
 }

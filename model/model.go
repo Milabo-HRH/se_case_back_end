@@ -2,18 +2,16 @@ package model
 
 import (
 	"github.com/jinzhu/gorm"
-	"time"
 )
 
 type Register struct {
 	gorm.Model
-	Name       string    `gorm:"type:varchar(40);not null"`
-	Age        uint      `gorm:"type:int unsigned;"`
-	Gender     string    `gorm:"type:varchar(1);" json:"Gender"`
-	Department string    `gorm:"type:varchar(40);not null" json:"Department"`
-	RegTime    time.Time `gorm:"type:DATETIME;not null"`
-	Status     string    `gorm:"type:varchar(1);" json:"Status"`
-	UserID     uint      `gorm:"type:int unsigned;notnull"`
+	Name       string `gorm:"type:varchar(40);not null"`
+	Age        uint   `gorm:"type:int unsigned;"`
+	Gender     string `gorm:"type:varchar(1);" json:"Gender"`
+	Department string `gorm:"type:varchar(40);not null" json:"Department"`
+	Status     string `gorm:"type:varchar(1);" json:"Status"`
+	UserID     uint   `gorm:"type:int unsigned;notnull"`
 }
 
 type Case struct {
