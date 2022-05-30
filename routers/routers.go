@@ -30,5 +30,6 @@ func CollectRoute(r *gin.Engine) *gin.Engine {
 	r.GET("/api/record/:patient_id", controller.GetRecordByPID)
 	r.GET("/api/view/:id", controller.GetRecord)
 	r.POST("/api/newcase", controller.Register)
+	r.POST("/api/commit", controller.CommitCase)
 	return r
 }

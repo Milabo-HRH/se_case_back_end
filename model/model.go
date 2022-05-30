@@ -18,29 +18,36 @@ type Register struct {
 
 type Case struct {
 	gorm.Model
-	RegisterID uint   `gorm:"type:int unsigned;notnull"`
-	UserID     uint   `gorm:"type:int unsigned;notnull"`
-	CC         string `gorm:"type:text;notnull"`
-	HOPI       string `gorm:"type:text;notnull"`
-	PMH        string `gorm:"type:text"`
-	PE         string `gorm:"type:text;notnull"`
-	PD         string `gorm:"type:text;notnull"`
-	RC         string `gorm:"type:text;notnull"`
-	EDU        string `gorm:"type:text;notnull"`
+	RegisterID uint   `gorm:"type:int unsigned;notnull" json:"registerID"`
+	CC         string `gorm:"type:text;notnull" json:"cc"`
+	HOPI       string `gorm:"type:text;notnull" json:"hopi"`
+	PMH        string `gorm:"type:text" json:"pmh"`
+	PE         string `gorm:"type:text;notnull" json:"pe"`
+	PD         string `gorm:"type:text;notnull" json:"pd"`
+	RC         string `gorm:"type:text;notnull" json:"rc"`
+	EDU        string `gorm:"type:text;notnull" json:"edu"`
 }
 
 type Supplement struct {
 	gorm.Model
-	ClinicID  uint   `gorm:"type:int unsigned;notnull"`
-	CheckName string `gorm:"type:varchar(40);"`
-	Result    string `gorm:"type:text;notnull"`
+	ClinicID  uint   `gorm:"type:int unsigned;notnull" json:"clinicID"`
+	CheckName string `gorm:"type:varchar(40);" json:"checkName"`
+	Result    string `gorm:"type:text;notnull" json:"result"`
 }
 
 type Treatment struct {
 	gorm.Model
-	ClinicID uint   `gorm:"type:int unsigned;notnull"`
-	MedName  string `gorm:"type:varchar(40);"`
-	Val      uint   `gorm:"type:int unsigned;notnull"`
-	Unit     string `gorm:"type:varchar(40);"`
-	Usage    string `gorm:"type:text;"`
+	ClinicID uint   `gorm:"type:int unsigned;notnull" json:"clinicID"`
+	MedName  string `gorm:"type:varchar(40);" json:"medName"`
+	Val      uint   `gorm:"type:int unsigned;notnull" json:"val"`
+	Unit     string `gorm:"type:varchar(40);" json:"unit"`
+	Usage    string `gorm:"type:text;" json:"usage"`
+}
+
+type Sps struct {
+	Sps []Supplement `json:"sps"`
+}
+
+type Trs struct {
+	Trs []Treatment `json:"trs"`
 }

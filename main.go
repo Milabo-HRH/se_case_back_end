@@ -1,9 +1,11 @@
 package main
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"os"
 	"se_case_back_end/common"
+	"se_case_back_end/routers"
 )
 
 func main() {
@@ -11,9 +13,9 @@ func main() {
 	db := common.InitDB()
 	defer db.Close()
 
-	//r := gin.Default()
-	//r = routers.CollectRoute(r)
-	//panic(r.Run("0.0.0.0:8080"))
+	r := gin.Default()
+	r = routers.CollectRoute(r)
+	panic(r.Run("0.0.0.0:8080"))
 }
 
 func InitConfig() {
