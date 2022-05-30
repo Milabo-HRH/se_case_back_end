@@ -29,5 +29,6 @@ func CollectRoute(r *gin.Engine) *gin.Engine {
 	////r.POST("/annotations/reject", middleware.AuthMiddleware, controller.DeleteAnnotation)
 	r.GET("/api/record/:patient_id", controller.GetRecordByPID)
 	r.GET("/api/view/:id", controller.GetRecord)
+	r.POST("/api/newcase", controller.Register)
 	return r
 }

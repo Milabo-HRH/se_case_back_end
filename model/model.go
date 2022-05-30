@@ -12,6 +12,8 @@ type Register struct {
 	Department string `gorm:"type:varchar(40);not null" json:"Department"`
 	Status     string `gorm:"type:varchar(1);" json:"Status"`
 	UserID     uint   `gorm:"type:int unsigned;notnull"`
+	DoctorID   uint   `gorm:"type:int unsigned;notnull"`
+	DoctorName string `gorm:"type:varchar(40);not null"`
 }
 
 type Case struct {

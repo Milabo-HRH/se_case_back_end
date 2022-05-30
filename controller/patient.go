@@ -35,7 +35,6 @@ func GetRecord(c *gin.Context) {
 		response.Response(c, http.StatusBadRequest, 400, nil, "查询失败")
 		return
 	}
-	/* todo */
 	if rg.Department == "" {
 		response.Response(c, http.StatusBadRequest, 400, nil, "该对象不存在")
 	}
@@ -52,6 +51,8 @@ func GetRecord(c *gin.Context) {
 		"status":     rg.Status,
 		"regTime":    rg.CreatedAt.Format("2006-01-02 15:04:05"),
 		"userID":     rg.UserID,
+		"doctorName": rg.DoctorName,
+		"doctorID":   rg.DoctorID,
 	}
 	ca := model.Case{}
 	if err := db.Model(&model.Case{}).Where("RegisterID = " + id).Take(&ca).Error; err != nil {
