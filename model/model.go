@@ -23,7 +23,7 @@ type Case struct {
 	PMH        string `gorm:"type:text"`
 	PE         string `gorm:"type:text;notnull"`
 	PD         string `gorm:"type:text;notnull"`
-	PC         string `gorm:"type:text;notnull"`
+	RC         string `gorm:"type:text;notnull"`
 	EDU        string `gorm:"type:text;notnull"`
 }
 
@@ -37,8 +37,8 @@ type Supplement struct {
 type Treatment struct {
 	gorm.Model
 	ClinicID uint   `gorm:"type:int unsigned;notnull"`
-	MedName  string `gorm:"type:varchar(40)"`
-	val      uint   `gorm:"type:int unsigned;notnull"`
-	unit     string `gorm:"type:varchar(40)"`
-	usage    string `gorm:"type:text"`
+	MedName  string `gorm:"type:varchar(40);"`
+	Val      uint   `gorm:"type:int unsigned;notnull"`
+	Unit     string `gorm:"type:varchar(40);"`
+	Usage    string `gorm:"type:text;"`
 }
