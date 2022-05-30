@@ -44,10 +44,8 @@ type Treatment struct {
 	Usage    string `gorm:"type:text;" json:"usage"`
 }
 
-type Sps struct {
+type Com struct {
+	Cas Case         `json:"cas"`
 	Sps []Supplement `json:"sps"`
-}
-
-type Trs struct {
-	Trs []Treatment `json:"trs"`
+	Trs []Treatment  `json:"trs"`
 }

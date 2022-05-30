@@ -12,15 +12,15 @@ import (
 func GetRecordByPID(c *gin.Context) {
 	id := c.Param("patient_id")
 	db := common.GetDB()
-	var records []model.Case
-	if err := db.Model(&model.Case{}).Where("UserID = " + id).Order("id desc").Find(&records).Error; err != nil {
+	var records []model.Register
+	if err := db.Model(&model.Register{}).Where("user_id = " + id).Where("status = \"T\"").Order("id desc").Find(&records).Error; err != nil {
 		response.Response(c, http.StatusUnprocessableEntity, 500, nil, "查询失败")
 		return
 	}
 	var res []gin.H
 	for i := 0; i < len(records); i++ {
 		res = append(res, gin.H{
-			"date": records[i].CreatedAt.Format("2006-01-02 15:04:05"),
+			"date": records[i].UpdatedAt.Format("2006-01-02 15:04:05"),
 			"url":  "/api/view/" + strconv.Itoa(int(records[i].ID)),
 		})
 	}
@@ -38,8 +38,6 @@ func GetRecord(c *gin.Context) {
 	if rg.Department == "" {
 		response.Response(c, http.StatusBadRequest, 400, nil, "该对象不存在")
 	}
-	//var cas gin.H
-	//var reg gin.H
 	var sup []gin.H
 	var tre []gin.H
 	reg := gin.H{
@@ -55,7 +53,7 @@ func GetRecord(c *gin.Context) {
 		"doctorID":   rg.DoctorID,
 	}
 	ca := model.Case{}
-	if err := db.Model(&model.Case{}).Where("RegisterID = " + id).Take(&ca).Error; err != nil {
+	if err := db.Model(&model.Case{}).Where("register_id = " + id).Take(&ca).Error; err != nil {
 		response.Response(c, http.StatusBadRequest, 400, nil, "查询失败")
 		return
 	}
@@ -69,7 +67,7 @@ func GetRecord(c *gin.Context) {
 		"edu":  ca.EDU,
 	}
 	var sp []model.Supplement
-	if err := db.Model(&model.Supplement{}).Where("ClinicID = " + id).Order("id desc").Find(&sp).Error; err != nil {
+	if err := db.Model(&model.Supplement{}).Where("clinic_id = " + id).Order("id desc").Find(&sp).Error; err != nil {
 		response.Response(c, http.StatusUnprocessableEntity, 500, nil, "查询失败")
 		return
 	}
@@ -80,7 +78,7 @@ func GetRecord(c *gin.Context) {
 		})
 	}
 	var tm []model.Treatment
-	if err := db.Model(&model.Treatment{}).Where("ClinicID = " + id).Order("id desc").Find(&tm).Error; err != nil {
+	if err := db.Model(&model.Treatment{}).Where("clinic_id = " + id).Order("id desc").Find(&tm).Error; err != nil {
 		response.Response(c, http.StatusUnprocessableEntity, 500, nil, "查询失败")
 		return
 	}

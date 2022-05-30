@@ -7,10 +7,11 @@ import (
 	"se_case_back_end/model"
 	"se_case_back_end/response"
 	"strconv"
+	"time"
 )
 
 func CommitCase(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Query("id")
 	idD, _ := strconv.Atoi(id)
 	db := common.GetDB()
 	rg := model.Register{}
@@ -18,43 +19,39 @@ func CommitCase(c *gin.Context) {
 		response.Response(c, http.StatusBadRequest, 400, nil, "该挂号不存在")
 		return
 	}
-	if err := db.Model(&model.Case{}).Where("RegisterID = " + id).Take(nil).Error; err == nil {
+	rg.Status = "T"
+	rg.UpdatedAt = time.Now()
+
+	ca := model.Case{}
+	if err := db.Model(&model.Case{}).Where("register_id = " + id).Take(&ca).Error; err == nil {
 		response.Response(c, http.StatusBadRequest, 400, nil, "该挂号已处理")
 		return
 	}
-
-	var cas model.Case
-	err := c.BindJSON(&cas)
+	var com model.Com
+	err := c.BindJSON(&com)
 	if err != nil {
 		response.Response(c, http.StatusBadRequest, 400, nil, "输入违法")
 		return
 	}
-	cas.RegisterID = uint(idD)
-
-	var sps model.Sps
-	err = c.BindJSON(&sps)
-	if err != nil {
-		response.Response(c, http.StatusBadRequest, 400, nil, "辅助检查输入违法")
-		return
+	cas := com.Cas
+	sps := com.Sps
+	trs := com.Trs
+	cas.CreatedAt = time.Now()
+	cas.UpdatedAt = time.Now()
+	db.Save(rg)
+	db.Create(&cas)
+	for i := 0; i < len(sps); i++ {
+		sps[i].ClinicID = uint(idD)
+		sps[i].CreatedAt = time.Now()
+		sps[i].UpdatedAt = time.Now()
+		db.Create(&sps[i])
 	}
 
-	var trs model.Trs
-	err = c.BindJSON(&trs)
-	if err != nil {
-		response.Response(c, http.StatusBadRequest, 400, nil, "处理意见输入违法")
-		return
-	}
-
-	db.Create(cas)
-
-	for i := 0; i < len(sps.Sps); i++ {
-		sps.Sps[i].ClinicID = uint(idD)
-		db.Create(sps.Sps[i])
-	}
-
-	for i := 0; i < len(trs.Trs); i++ {
-		trs.Trs[i].ClinicID = uint(idD)
-		db.Create(trs.Trs[i])
+	for i := 0; i < len(trs); i++ {
+		trs[i].ClinicID = uint(idD)
+		trs[i].CreatedAt = time.Now()
+		trs[i].UpdatedAt = time.Now()
+		db.Create(&trs[i])
 	}
 
 	response.Success(c, gin.H{
