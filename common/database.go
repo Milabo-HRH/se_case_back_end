@@ -18,7 +18,7 @@ func InitDB() *gorm.DB {
 	username := viper.GetString("dataSource.username")
 	password := viper.GetString("dataSource.password")
 	charset := viper.GetString("dataSource.charset")
-	args := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=true", username, password, host, port, database, charset)
+	args := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=true&loc=Local", username, password, host, port, database, charset)
 	db, err := gorm.Open(driverName, args)
 	if err != nil {
 		panic("failed to connect database, err: " + err.Error())
